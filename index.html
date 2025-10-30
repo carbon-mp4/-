@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>おとりっぷ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=WDXL+Lubrifont+JP+N&display=swap" rel="stylesheet">
+    <style>
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #F9F7F7;
+    padding-bottom: 300px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header{
+    background-color: #dbe2ef;
+}
+
+#question-area{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    align-self: center;
+}
+
+#question{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+#result-area{
+    margin-top: 100;
+    margin-bottom: 100px;
+    align-self: center
+}
+
+#result-area h2{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+#product-item {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#result-list {
+  display: grid;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  grid-template-columns: repeat(2,1fr);
+  margin: 0 20px;
+}
+
+#result-list:has(#product-item:only-child) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+#result-list img{
+    width: auto;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+li{
+    list-style: none;
+}
+
+li img{
+    width: auto;
+    height: 300px;
+}
+
+li{
+    font-size: 20px;
+}
+
+button {
+    padding: 20px 40px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #3f72af;
+    border: 2px solid lightslategray;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+#product-item .amazon a{
+    text-decoration: none;
+    color: #F58220;
+}
+
+#product-item .off a{
+    text-decoration: none;
+    color: #0AD7DF;
+}
+
+#product-item .off{
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #0AD7DF;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+#product-item .amazon{
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #F58220;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+button:hover{
+    filter: brightness(1.2);
+}
+
+#back-button{
+    color: #000000;
+    background-color: #dbe2ef;
+    border: 2px solid lightslategray;
+    cursor: pointer;
+}
+
+header {
+    color: #000000;
+    font-size: 4rem;
+    z-index:21474836;
+}
+
+.elevator-container {
+    position: fixed;
+    top: 0;
+    width: 15vw;
+    max-width: 300px;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.elevator-container.left {
+    left: 0;
+}
+
+.elevator-container.right {
+    right: 0;
+}
+
+.image-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    position: relative;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    max-height: 100vh;
+    object-fit: cover;
+    object-position: top;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+}
+
+.elevator-container.left .image-wrapper {
+    transform: translateY(0);
+    animation: slideDownSmooth 30s linear infinite;
+}
+
+.elevator-container.right .image-wrapper {
+    transform: translateY(0);
+    animation: slideUpSmooth 30s linear infinite;
+}
+
+@keyframes slideDownSmooth {
+    0% {
+        transform: translateY(-50%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUpSmooth {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%);
+    }
+}
+
+.logo{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: auto auto;
+    margin: 0 auto;
+    width: 80%;
+    gap: 10px;
+    min-width: 50px;
+}
+
+.logo img{
+    width: 60%;
+    height: auto;
+    min-width: 75px;
+}
+
+footer {
+    position: fixed; 
+    bottom: 0;      
+    left: 0;       
+    width: 100%;    
+    z-index: 100;
+}
+
+@media (max-width: 768px) {
+    body{
+        padding-bottom: 200px;
+    }
+    header{
+        font-size: 3rem;
+    }
+    #question{
+        font-size: 2rem;
+    }
+    #result-list{
+        grid-template-columns: repeat(1,1fr);
+        gap: 15px;
+    }
+    #result-area h2{
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+    #result-list img{
+        height: 150px;
+    }
+    li img{
+        height: 250px;
+    }
+    li {
+        font-size: 18px;
+    }
+    button{
+        padding: 15px 30px;
+        font-size: 14px;
+    }
+    .elevator-container {
+        width: 100vw;
+        max-width: 100px;
+    }
+    .main-content {
+        margin: 0 120px;
+    }
+    .logo{
+        width: 90%;
+        grid-template-columns: repeat(4,1fr);
+    }
+    .logo img{
+        width: 80%;
+        min-width: 50px;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <p style="z-index:2147483647">おとりっぷ</p>
+    </header>
+    <div id="question-area">
+        <p id="question">読み込み中...</p>
+        <div id="answer-buttons"></div> 
+        <button id="back-button" style="display:none;">戻る</button>
+    </div>
+
+    <div id="result-area" style="display: none;">
+        <h2>見つかった商品</h2>
+        <ul id="result-list"></ul>
+        <button onclick="restart()">もう一度</button>
+    </div>
+
+<div class="elevator-container left">
+    <div class="image-wrapper">
+        <img src="img/AirPods_4.png" alt="">
+        <img src="img/AirPods_Pro_3.png" alt="">
+        <img src="img/ATH-CKS50TW2.png" alt="">
+        <img src="img/ATH-TWX9MK2.png" alt="">
+        <img src="img/Beats_Powerbeats_Pro_2.png" alt="">
+        <img src="img/Beats_Studio_Buds_+.png" alt="">
+        <img src="img/EAH-AZ60M2.png" alt="">
+        <img src="img/EAH-AZ100.png" alt="">
+        <img src="img/EarFunAirPro_4i.png" alt="">
+        <img src="img/EarFunOpenJump.png" alt="">
+        <img src="img/OpenFit2+.png" alt="">
+        <img src="img/QuietComfortUltraEarbuds_Dainisedai.png" alt="">
+        <img src="img/Soundcore_C40i.png" alt="">
+        <img src="img/Soundcore_Sport_X20.png" alt="">
+        <img src="img/TE-A1.png" alt="">
+        <img src="img/TOURPRO_3.png" alt="">
+        <img src="img/WF-C710N.png" alt="">
+        <img src="img/Arctis_GameBuds.png" alt="">
+    </div>
+</div>
+
+<div class="elevator-container right">
+    <div class="image-wrapper">
+        <img src="img/AirPods_Pro_2.png" alt="">
+        <img src="img/ATH-CKS30TW+.png" alt="">
+        <img src="img/ATH-TWX7.png" alt="">
+        <img src="img/Beats_Powerbeats_Fit.png" alt="">
+        <img src="img/Beats_SoloBuds.png" alt="">
+        <img src="img/EAH-AZ60M2.png" alt="">
+        <img src="img/EAH-AZ80.png" alt="">
+        <img src="img/EarFunAirPro_4.png" alt="">
+        <img src="img/EarFunClip.png" alt="">
+        <img src="img/LinkBudsFit.png" alt="">
+        <img src="img/OpenFitAir.png" alt="">
+        <img src="img/Soundcore_Liberty4_Pro.png" alt="">
+        <img src="img/Soundcore_P40i.png" alt="">
+        <img src="img/WF-1000XM5.png" alt="">
+        <img src="img/Soundcore_Liberty_5.png" alt="">
+        <img src="img/WF-G700N.png" alt="">
+        <img src="img/TE-W1-PNK.png" alt="">
+        <img src="img/WF-1000XM5.png" alt="">
+        <img src="img/WF-C710N.png" alt="">
+    </div>
+</div>
+
+<footer>
+    <div class="logo">
+        <a href="https://x.gd/BF9E2" target="_blank"><img src="logos/ANKER_logo.png" alt="ANKER"></a>  
+        <a href="https://x.gd/nc8qQ" target="_blank"><img src="logos/Apple_logo.png" alt="Apple"></a>
+        <a href="https://x.gd/cDdPY" target="_blank"><img src="logos/audio-technica_logo.png" alt="Audio-Technica"></a>
+        <a href="https://x.gd/WB0Pz" target="_blank"><img src="logos/BOSE_logo.png" alt="BOSE"></a>
+        <a href="https://x.gd/avIlS" target="_blank"><img src="logos/earfun_logo.png" alt="Earfun"></a>
+        <a href="https://x.gd/JUzQm" target="_blank"><img src="logos/JBL_logo.png" alt="JBL"></a>
+        <a href="https://jp.shokz.com/" target="_blank"><img src="logos/SHOKZ_logo.png" alt="SHOKZ"></a>
+        <a href="https://x.gd/yyTiP" target="_blank"><img src="logos/SONY_logo.png" alt="SONY"></a>
+        <a href="https://x.gd/8AD1J" target="_blank"><img src="logos/steelseries_logo.png" alt="SteelSeries"></a>
+        <a href="https://x.gd/5A5rO" target="_blank"><img src="logos/Technics_logo.png" alt="Technics"></a>
+    </div>
+</footer>
+
+<script>
+const products = [{"name":"Soundcore_Liberty4 Pro","price_range":"1万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"19,990","url":"https://amzn.asia/d/bvdy9uF","img":"img/Soundcore_Liberty4_Pro.png","off":"https://www.ankerjapan.com/pages/soundcore-liberty4-pro"},{"name":"Soundcore_Liberty 5","price_range":"1万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"14,990","url":"https://amzn.asia/d/dobIacY","img":"img/Soundcore_Liberty_5.png","off":"https://www.ankerjapan.com/products/a3957"},{"name":"Soundcore P40i","price_range":"1万円以下","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"11~15時間","prise":"7990","url":"https://amzn.asia/d/geCGdga","img":"img/Soundcore_P40i.png","off":"https://www.ankerjapan.com/products/a3331"},{"name":"Soundcore_Sport X20","price_range":"1万円以下","noise":"いらない","noisepower":"中程度","purpose":"運動","type":"あり","playtime":"11~15時間","prise":"9990","url":"https://amzn.asia/d/fpOIFVN","img":"img/Soundcore_Sport_X20.png","off":"https://www.ankerjapan.com/products/a3968"},{"name":"Soundcore C40i","price_range":"1万円以上","noise":"いらない","noisepower":"弱い","purpose":"音楽鑑賞","type":"なし","playtime":"5~10時間","prise":"12,990","url":"https://amzn.asia/d/7z5A9Jr","img":"img/Soundcore_C40i.png","off":"https://www.ankerjapan.com/products/a3331"},{"name":"AirPods 4(ノイキャンモデル)","price_range":"2万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"なし","playtime":"5~10時間","prise":"29,800","url":"https://amzn.asia/d/bpzAGn9","img":"img/AirPods_4.png","off":"https://x.gd/uZGUy"},{"name":"AirPods Pro 3","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"39,800","url":"https://amzn.asia/d/dFlpvJK","img":"img/AirPods_Pro_3.png","off":"https://x.gd/Kv7iP"},{"name":"Beats Powerbeats_Pro 2","price_range":"3万円以上","noise":"いらない","noisepower":"中程度","purpose":"運動","type":"あり","playtime":"5~10時間","prise":"39,800","url":"https://amzn.asia/d/eeABYmz","img":"img/Beats_Powerbeats_Pro_2.png","off":"https://www.beatsbydre.com/jp/earbuds/powerbeats-pro-2/MX733/quick-sand"},{"name":"Beats SoloBuds","price_range":"1万円以上","noise":"いらない","noisepower":"弱い","purpose":"音楽鑑賞","type":"あり","playtime":"16時間以上","prise":"12,800","url":"https://amzn.asia/d/aHQ7SmU","img":"img/Beats_SoloBuds.png","off":"https://www.beatsbydre.com/jp/support/earbuds/solo-buds"},{"name":"Beats Studio_Buds +","price_range":"2万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"24,800","url":"https://amzn.asia/d/8fjZJ6y","img":"img/Beats_Studio_Buds_+.png","off":"https://www.beatsbydre.com/jp/earbuds/studio-buds-plus-wireless-noise-cancelling"},{"name":"Beats Powerbeats Fit","price_range":"2万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"28,800","url":"https://amzn.asia/d/cMcLDgO","img":"img/Beats_Powerbeats_Fit.png","off":"https://www.beatsbydre.com/jp/earbuds/powerbeats-fit"},{"name":"EarFunAirPro 4i","price_range":"1万円以下","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"8990","url":"https://amzn.asia/d/1ohhQl4","img":"img/EarFunAirPro_4i.png","off":"https://x.gd/mRbte"},{"name":"EarFunClip","price_range":"1万円以下","noise":"いらない","noisepower":"弱い","purpose":"運動","type":"なし","playtime":"5~10時間","prise":"7990","url":"https://amzn.asia/d/82wpIfS","img":"img/EarFunClip.png","off":"https://www.myearfun.com/jp"},{"name":"EarFunOpenJump","price_range":"1万円以下","noise":"いらない","noisepower":"弱い","purpose":"運動","type":"なし","playtime":"11~15時間","prise":"8990","url":"https://amzn.asia/d/3FK08xu","img":"img/EarFunOpenJump.png","off":"https://x.gd/5zr1c"},{"name":"EarFunAirPro 4","price_range":"1万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"11~15時間","prise":"11,990","url":"https://amzn.asia/d/8C29HVh","img":"img/EarFunAirPro_4.png","off":"https://x.gd/zzeqg"},{"name":"EAH-AZ100","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"39,600","url":"https://amzn.asia/d/dPXqvP9","img":"img/EAH-AZ100.png","off":"https://jp.technics.com/products/tws/az100/"},{"name":"EAH-AZ80","price_range":"2万円以上","noise":"欲しい","noisepower":"強い","purpose":"通勤","type":"あり","playtime":"5~10時間","prise":"29,700","url":"https://amzn.asia/d/cvqAeZZ","img":"img/EAH-AZ80.png","off":"https://jp.technics.com/products/tws/az80/"},{"name":"EAH-AZ60M2","price_range":"2万円以上","noise":"欲しい","noisepower":"強い","purpose":"通勤","type":"あり","playtime":"5~10時間","prise":"21,780","url":"https://amzn.asia/d/euXH6if","img":"img/EAH-AZ60M2.png","off":"https://jp.technics.com/products/tws/az60m2/"},{"name":"EAH-AZ40M2","price_range":"1万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"14,850","url":"https://amzn.asia/d/4poMPnL","img":"img/EAH-AZ40M2.png","off":"https://jp.technics.com/products/tws/az40m2/"},{"name":"OpenFit2+","price_range":"2万円以上","noise":"いらない","noisepower":"弱い","purpose":"運動","type":"なし","playtime":"11~15時間","prise":"27,800","url":"https://amzn.asia/d/1t2tkbU","img":"img/OpenFit2+.png","off":"https://jp.shokz.com/products/openfit2plus"},{"name":"OpenFitAir","price_range":"1万円以上","noise":"いらない","noisepower":"弱い","purpose":"運動","type":"なし","playtime":"5~10時間","prise":"19,880","url":"https://amzn.asia/d/aYlcPnK","img":"img/OpenFitAir.png","off":"https://jp.shokz.com/products/openfit-air"},{"name":"WF-1000XM5","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"11~15時間","prise":"39,600","url":"https://amzn.asia/d/5VjB7Us","img":"img/WF-1000XM5.png","off":"https://www.sony.jp/headphone/special/WF-1000XM5/"},{"name":"LinkBudsFit","price_range":"2万円以上","noise":"欲しい","noisepower":"中程度","purpose":"通勤","type":"あり","playtime":"5~10時間","prise":"29,700","url":"https://amzn.asia/d/ffjic7K","img":"img/LinkBudsFit.png","off":"https://www.sony.jp/headphone/special/LinkBuds_Fit/"},{"name":"WF-C710N","price_range":"1万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"17,600","url":"https://amzn.asia/d/cThOyXl","img":"img/WF-C710N.png","off":"https://www.sony.jp/headphone/products/WF-C710N/"},{"name":"WF-C510","price_range":"1万円以下","noise":"いらない","noisepower":"弱い","purpose":"音楽鑑賞","type":"あり","playtime":"11~15時間","prise":"9900","url":"https://amzn.asia/d/27auwtv","img":"img/WF-C510.png","off":"https://www.sony.jp/headphone/products/WF-C510/"},{"name":"WF-G700N","price_range":"2万円以上","noise":"欲しい","noisepower":"強い","purpose":"ゲーム","type":"あり","playtime":"11~15時間","prise":"29,700","url":"https://amzn.asia/d/abAT49v","img":"img/WF-G700N.png","off":"https://www.sony.jp/inzone/special/INZONE_BUDS/?s_pid=jp_/inzone/_products_bads"},{"name":"ATH-TWX9MK2","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"38,500","url":"https://amzn.asia/d/81LdzRF","img":"img/ATH-TWX9MK2.png","off":"https://www.audio-technica.co.jp/product/ATH-TWX9MK2"},{"name":"ATH-CKS50TW2","price_range":"2万円以上","noise":"欲しい","noisepower":"中程度","purpose":"通勤","type":"あり","playtime":"16時間以上","prise":"23,980","url":"https://amzn.asia/d/5FzYhYa","img":"img/ATH-CKS50TW2.png","off":"https://www.audio-technica.co.jp/product/ATH-CKS50TW2"},{"name":"ATH-CKS30TW+","price_range":"1万円以上","noise":"欲しい","noisepower":"中程度","purpose":"通勤","type":"あり","playtime":"5~10時間","prise":"13,970","url":"https://www.amazon.co.jp/dp/B0D53S5CKD?ref=emc_p_m_5_i_atc&th=1","img":"img/ATH-CKS30TW+.png","off":"https://www.audio-technica.co.jp/product/ATH-CKS30TWplus"},{"name":"ATH-TWX7","price_range":"2万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"5~10時間","prise":"26,400","url":"https://www.amazon.co.jp/dp/B0CK8CTVBL?ref=emc_s_m_5_i_atc&th=1","img":"img/ATH-TWX7.png","off":"https://www.audio-technica.co.jp/product/ATH-TWX7"},{"name":"TE-W1-PNK","price_range":"1万円以上","noise":"欲しい","noisepower":"中程度","purpose":"音楽鑑賞","type":"あり","playtime":"16時間以上","prise":"19,800","url":"https://amzn.asia/d/0VwVCQK","img":"img/TE-W1-PNK.png","off":"https://aviot.jp/product/te-w1-pnk/"},{"name":"TE-A1","price_range":"1万円以上","noise":"欲しい","noisepower":"弱い","purpose":"音楽鑑賞","type":"あり","playtime":"16時間以上","prise":"15,950","url":"https://amzn.asia/d/d5SzCN8","img":"img/TE-A1.png","off":"https://aviot.jp/product/te-a1/"},{"name":"TOURPRO 3","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"音楽鑑賞","type":"あり","playtime":"11~15時間","prise":"39,600","url":"https://amzn.asia/d/jjFyjHe","img":"img/TOURPRO_3.png","off":"https://x.gd/9pk4o"},{"name":"QuietComfortUltraEarbuds (第二世代)","price_range":"3万円以上","noise":"欲しい","noisepower":"強い","purpose":"通勤","type":"あり","playtime":"5~10時間","prise":"39,600","url":"https://amzn.asia/d/fXAmeLp","img":"img/QuietComfortUltraEarbuds_Dainisedai.png","off":"https://x.gd/N6cOi"},{"name":"Arctis GameBuds","price_range":"2万円以上","noise":"欲しい","noisepower":"中程度","purpose":"ゲーム","type":"あり","playtime":"5~10時間","prise":"25,480","url":"https://amzn.asia/d/5AZydM6","img":"img/Arctis_GameBuds.png","off":"https://jp.steelseries.com/arctisgamebuds"}];
+
+const questions = [{"key":"purpose","text":"用途は何ですか?","values":["運動","音楽鑑賞","通勤","ゲーム"]},{"key":"price_range","text":"どの価格帯がいいですか?","values":["1万円以下","1万円以上","2万円以上","3万円以上"]},{"key":"noise","text":"ノイズキャンセルは欲しいですか?","values":["欲しい","いらない"]},{"key":"noisepower","text":"ノイズキャンセリングの強さは?","values":["強い","中程度","弱い"]},{"key":"type","text":"イヤーピースはありかなしか?","values":["あり","なし","その他"]},{"key":"playtime","text":"連続再生時間(イヤホン単位)は何時間がいいですか?","values":["5~10時間","11~15時間","16時間以上"]}];
+
+let step = 0;
+let candidates = [];
+let history = [];
+
+const questionText = document.getElementById('question');
+const answerButtons = document.getElementById('answer-buttons');
+const questionArea = document.getElementById('question-area');
+const resultArea = document.getElementById('result-area');
+const resultList = document.getElementById('result-list');
+const backButton = document.getElementById('back-button');
+
+function initializeData() {
+    candidates = [...products];
+    showQuestion();
+}
+
+function showQuestion() {
+    if (step >= questions.length || candidates.length <= 1) {
+        return showResult();
+    }
+
+    backButton.style.display = step > 0 ? 'inline-block' : 'none';
+
+    const currentQuestion = questions[step];
+    questionText.textContent = currentQuestion.text;
+    answerButtons.innerHTML = '';
+
+    const availableValues = new Set();
+    candidates.forEach(product => {
+        const value = product[currentQuestion.key];
+        if (value !== "" && value !== undefined && value !== null) {
+            availableValues.add(value);
+        }
+    });
+
+    if (availableValues.size === 1) {
+        step++;
+        showQuestion();
+        return;
+    }
+
+    currentQuestion.values.forEach((option, index) => {
+        if (availableValues.has(option)) {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.onclick = () => handleAnswer(option);
+            answerButtons.appendChild(button);
+        }
+    });
+}
+
+function handleAnswer(value) {
+    const currentQuestion = questions[step];
+
+    history.push({
+        step: step,
+        candidates: [...candidates]
+    });
+
+    candidates = candidates.filter(product => {
+        if (!(currentQuestion.key in product)) {
+            console.log(`商品 ${product.name} には属性 ${currentQuestion.key} がありません`);
+            return false;
+        }
+
+        const productValue = product[currentQuestion.key];
+
+        if (productValue === "" || productValue === undefined || productValue === null) {
+            if (currentQuestion.key === "noisepower" &&
+                product.noise === "いらない" &&
+                (value === "弱い" || value === "中程度" || value === "強い")) {
+                return false;
+            }
+            return false;
+        }
+
+        return productValue === value;
+    });
+
+    step++;
+    showQuestion();
+}
+
+function showResult() {
+    questionArea.style.display = "none";
+    resultArea.style.display = "block";
+   
+    if (candidates.length > 0) {
+        resultList.innerHTML = candidates.map(product =>
+            `<li id="product-item">
+                <img src="${product.img}" width="100" height="auto" onerror="this.style.display='none'"><br>
+                ${product.name}<br>
+                <button class="amazon"><a href="${product.url}" target="_blank">Amazon</a><br></button>
+                <button class="off"><a href="${product.off}" target="_blank">Website</a><br></button>
+                <p>価格: ${product.prise}円</p>
+            </li>`
+        ).join('');
+    } else {
+        resultList.innerHTML = "<li>一致する商品が見つかりませんでした。条件を変えてもう一度お試しください。</li>";
+    }
+}
+
+function restart() {
+    step = 0;
+    candidates = [...products];
+    history = [];
+    questionArea.style.display = "block";
+    resultArea.style.display = "none";
+    showQuestion();
+}
+
+backButton.addEventListener('click', () => {
+    if (history.length > 0) {
+        const lastHistory = history.pop();
+        step = lastHistory.step;
+        candidates = [...lastHistory.candidates];
+
+        showQuestion();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeData();
+});
+</script>
+
+</body>
+</html>
