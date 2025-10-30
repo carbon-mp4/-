@@ -1,0 +1,335 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    background-color: #F9F7F7;
+    padding-bottom: 300px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+header{
+    background-color: #dbe2ef;
+}
+
+
+/* 質問エリア */
+#question-area{
+    margin-top: 100px;
+    margin-bottom: 100px;
+    align-self: center;
+}
+
+/* 質問の文字 */
+#question{
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+
+/* リザルトエリア */ 
+#result-area{
+    margin-top: 100;
+    margin-bottom: 100px;
+    align-self: center
+}
+
+#result-area h2{
+    margin-top: 2rem;
+    margin-bottom: 2
+    4rem;
+    font-size: 2rem;
+}
+
+#product-item {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#result-list {
+  display: grid;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+  grid-template-columns: repeat(2,1fr);
+}
+
+#result-list:has(#product-item:only-child) {
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+#result-list img{
+    width: auto;
+    height: 200px;
+}
+
+
+/* リストの・を消す */
+li{
+    list-style: none;
+}
+
+li img{
+    width: auto;
+    height: 300px;
+}
+
+li{
+    font-size: 20px;
+}
+
+/* 質問ボタン */
+button {
+    padding: 20px 40px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #3f72af;
+    border: 2px solid lightslategray;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+#product-item .amazon a{
+    text-decoration: none;
+    color: #F58220;
+}
+
+#product-item .off a{
+    text-decoration: none;
+    color: #0AD7DF;
+}
+
+#product-item .off{
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #0AD7DF;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+#product-item .amazon{
+    padding: 10px 20px;
+    font-size: 20px;
+    margin: 10px;
+    color: #ffffff;
+    background-color: #ffffff;
+    border: 2px solid #F58220;
+    cursor: pointer;
+    border-radius: 15px;
+    font-family: "WDXL Lubrifont JP N", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 5px;
+}
+
+button:hover{
+    filter: brightness(1.2);
+}
+
+
+/* 戻るボタン */
+#back-button{
+    color: #000000;
+    background-color: #dbe2ef;
+    border: 2px solid lightslategray;
+    cursor: pointer;
+}
+
+/* タイトルの文字 */
+header {
+    color: #000000;
+    font-size: 4rem;
+    z-index:21474836;
+}
+ 
+/* エレベーターコンテナの基本スタイル */
+.elevator-container {
+    position: fixed;
+    top: 0;
+    width: 15vw;
+    max-width: 300px;
+    height: 100vh;
+    overflow: hidden;
+    z-index: -1;
+}
+ 
+/* 左側のコンテナ */
+.elevator-container.left {
+    left: 0;
+}
+ 
+/* 右側のコンテナ */
+.elevator-container.right {
+    right: 0;
+}
+ 
+/* 画像ラッパーの基本スタイル */
+.image-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    position: relative;
+}
+ 
+/* 画像のスタイル */
+.image-wrapper img {
+    width: 100%;  /* 横幅を画面サイズに合わせる */
+    height: auto;
+    max-height: 100vh;  /* 縦幅は画面高さに制限 */
+    object-fit: cover;  /* アスペクト比を保ちつつ、領域にフィットさせる */
+    object-position: top; /* 画像が上に寄るように調整 */
+    margin-bottom: 10px;  /* 画像間の隙間 */
+    flex-shrink: 0;
+}
+ 
+/* 左側のエレベーターアニメーション（上から下へ） */
+.elevator-container.left .image-wrapper {
+    transform: translateY(0);
+    animation: slideDownSmooth 30s linear infinite;
+}
+ 
+/* 右側のエレベーターアニメーション（下から上へ） */
+.elevator-container.right .image-wrapper {
+    transform: translateY(0);
+    animation: slideUpSmooth 30s linear infinite;
+}
+ 
+/* 滑らかな上から下へのアニメーション */
+@keyframes slideDownSmooth {
+    0% {
+        transform: translateY(-50%);
+    }
+   
+    100% {
+        transform: translateY(0); /* 2画面分の高さに移動して新しい画像を表示 */
+    }
+}
+ 
+/* 滑らかな下から上へのアニメーション */
+@keyframes slideUpSmooth {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-50%); /* 2画面分の高さに移動して新しい画像を表示 */
+    }
+}
+
+/* ロゴ */
+.logo{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    grid-template-rows: auto auto;
+    margin: 0 auto;
+    width: 80%;
+    gap: 10px;
+    min-width: 50px;
+}
+
+/* ロゴの画像 */
+.logo img{
+    width: 60%;
+    height: auto;
+    min-width: 75px;
+}
+
+/* ロゴの位置 */
+footer {
+    position: fixed; 
+    bottom: 0;      
+    left: 0;       
+    width: 100%;    
+    z-index: 100;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    body{
+        padding-bottom: 200px;
+    }
+    /* タイトル */
+    header{
+        font-size: 3rem;
+    }
+    /* 質問の文字 */
+    #question{
+        font-size: 2rem;
+    }
+
+    
+
+    /* 結果リストの列数を変更 */
+    #result-list{
+        grid-template-columns: repeat(1,1fr);
+        gap: 15px;
+    }
+
+    #result-area h2{
+        font-size: 2rem;
+        margin-bottom: 24px;
+    }
+
+    #result-list img{
+        height: 150px;
+    }
+
+    /* リスト */
+    li img{
+        height: 250px;
+    }
+
+    li {
+        font-size: 18px;
+    }
+
+    /* ボタン */
+    button{
+        padding: 15px 30px;
+        font-size: 14px;
+    }
+
+    /* エレベーターコンテナ */
+    .elevator-container {
+        width: 100vw;
+        max-width: 100px;
+    }
+
+    .main-content {
+        margin: 0 120px;
+    }
+
+    .logo{
+        width: 90%;
+        grid-template-columns: repeat(4,1fr);
+    }
+    .logo img{
+        width: 80%;
+        min-width: 50px;
+    }
+}
